@@ -5,6 +5,7 @@ from PIL import Image, ImageFont, ImageDraw
 from captcha.models import Captcha
 import json
 from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.auth.models import User
 
 def random_filename(path=None, length=None):
 	text = string.ascii_letters + string.digits
@@ -51,6 +52,16 @@ def generate_captcha():
 
 	return file_name, answer, eval_string, new.id
 
+def retrieve_answer(ref_id):
+	result = Captcha.objects.filter(id=ref_id)
+
+	if not result:
+		return None
+
+	item = result[0]
+
+	return item.ans
+
 def login_page(request, template_name="login.html"):
     context = {'title': 'Login Page'}
     file_name, answer, _, result_id = generate_captcha()
@@ -65,9 +76,42 @@ def login_ajax(request):
 		data = json.loads(request.body)
 		username, password, ans, ref_id = data['username'], data['password'], data['captcha-result'], data['captcha-ref-id']
 
+		actual_ans = retrieve_answer(ref_id)
+
+		if ans == actual_ans: #Captcha Verification Complete, move on to password verification
+			user_exists = User.objects.filter(username=username)
+
+			if user_exists: #check password...
+				user = user_exists[0]
+				password_ok = user.check_password(password)
+
+				if password_ok: #ok move to logging in user
+					pass
+
+					#just incase...
+					response['status'] = 'failed'
+				else: #password failed...
+					response['status'] = 'failed'
+
+					file_name, ans, _, ref_id = generate_captcha()
+					response['captcha-url'] = '/' + file_name
+					response['ref-id'] = ref_id
+					response['error-message'] = 'Wrong Username/Password Combination'
+
+			else: #no matching user found
+				response['status'] = 'failed'
+				file_name, ans, _, ref_id = generate_captcha()
+				response['captcha-url'] = '/' + file_name
+				response['ref-id'] = ref_id
+				response['error-message'] = 'Wrong Username/Password Combination'
+		else: #Captcha Verification Failed, return new Captcha and ID so user can try again
+			response['status'] = 'failed'
+			file_name, ans, _, ref_id = generate_captcha()
+			response['captcha-url'] = '/' + file_name
+			response['ref-id'] = ref_id
+			response['error-message'] = 'Wrong Answer to Calculation'
 		
 		
-		response['status'] = 'ok'
 
 	else:
 		response['error'] = 'no post data found'

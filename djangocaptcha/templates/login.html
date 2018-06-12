@@ -19,10 +19,11 @@
 		  </div>
 		  <div class="form-group">
 		    <label for="captcha">Captcha</label>
-		    <img src="{{ captcha_url }}" class="captcha">
+		    <img src="{{ captcha_url }}" class="captcha" id="captcha-img">
 		    <input type="text" class="form-control" id="captcha" required>
 		  </div>
 		  <input id="ref-id" type="text" name="" value="{{ ref_id }}" hidden>
+		  <p class="error-message hidden form-error"></p>
 		  <button type="submit" class="btn btn-primary">Submit</button>
 		</form>
 	</div>

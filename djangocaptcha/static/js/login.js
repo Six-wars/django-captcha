@@ -49,8 +49,10 @@ $(function() {
             },
             data: JSON.stringify(data),
             success: function(response){
-                if (response['status'] == 'ok') {
-                    
+                if (response['status'] == 'failed') {
+                    $('#captcha-img').attr('src', response['captcha-url']);
+                    $('#ref-id').val(response['ref-id']);
+                    $('.form-error').text(response['error-message']);
                 }
 
             },
