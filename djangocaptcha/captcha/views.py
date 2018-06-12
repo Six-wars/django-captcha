@@ -25,7 +25,7 @@ def generate_captcha():
 	eval_string = "{0}{1}{2}".format(first_digit, chosen_operation, second_digit)
 	answer = eval(eval_string)
 
-	image = Image.new('RGB', (100, 50), (255, 255, 255))
+	image = Image.new('RGB', (44, 23), (255, 255, 255))
 	file_name = random_filename()
 	image.save(file_name, "PNG")
 
