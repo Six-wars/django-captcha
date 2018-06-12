@@ -7,7 +7,7 @@ def random_filename(path=None, length=None):
 	text = string.ascii_letters + string.digits
 
 	if path == None:
-		path = 'djangocaptcha/media/images/'
+		path = 'media/images/'
 
 	if length == None:
 		guess = random.randrange(8,15)
@@ -29,7 +29,7 @@ def generate_captcha():
 	file_name = random_filename()
 	image.save(file_name, "PNG")
 
-	draw = ImageDraw.Draw(file_name)
+	draw = ImageDraw.Draw(image)
 
 	font = ImageFont.truetype("/home/muiruri_samuel/webapp/django-captcha/djangocaptcha/static/fonts/arial.ttf", 16)
 	draw.text((5, 5), eval_string, (0,0,0), font=font)
