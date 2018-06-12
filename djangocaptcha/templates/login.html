@@ -8,21 +8,21 @@
 {% block content %}
 <div class="row container">
 	<div class="col-md-4">
-		<form action="" >
+		<form action="" id="login-form">
 		  <div class="form-group">
 		    <label for="username">Username</label>
-		    <input type="text" class="form-control" id="username" placeholder="Enter Username">
+		    <input type="text" class="form-control" id="username" placeholder="Enter Username" required>
 		  </div>
 		  <div class="form-group">
 		    <label for="password">Password</label>
-		    <input type="password" class="form-control" id="password" placeholder="Password">
+		    <input type="password" class="form-control" id="password" placeholder="Password" required>
 		  </div>
 		  <div class="form-group">
 		    <label for="captcha">Captcha</label>
 		    <img src="{{ captcha_url }}" class="captcha">
-		    <input type="text" class="form-control" id="captcha">
+		    <input type="text" class="form-control" id="captcha" required>
 		  </div>
-		  <input type="text" name="" value="{{ ref_id }}" hidden>
+		  <input id="ref-id" type="text" name="" value="{{ ref_id }}" hidden>
 		  <button type="submit" class="btn btn-primary">Submit</button>
 		</form>
 	</div>
