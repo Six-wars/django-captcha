@@ -27,7 +27,7 @@ def generate_captcha():
 
 	image = Image.new('RGB', (100, 50), (255, 255, 255))
 
-	font = ImageFont.truetype("djangocaptcha/static/fonts/sans-serif.ttf", 16)
+	font = ImageFont.truetype("/home/muiruri_samuel/webapp/django-captcha/djangocaptcha/static/fonts/arial.ttf", 16)
 	image.text((5, 5), eval_string, (0,0,0), font=font)
 	file_name = random_filename()
 	image.save(file_name, "PNG")
