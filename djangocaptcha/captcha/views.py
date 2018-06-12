@@ -1,7 +1,7 @@
 from django.shortcuts import render, render_to_response
 import random
 import string
-from PIL import Image, ImageFont
+from PIL import Image, ImageFont, ImageDraw
 
 def random_filename(path=None, length=None):
 	text = string.uppercase + string.lowercase + string.digits
@@ -26,10 +26,14 @@ def generate_captcha():
 	answer = eval(eval_string)
 
 	image = Image.new('RGB', (100, 50), (255, 255, 255))
+	file_name = random_filename()
+	image.save(file_name, "PNG")
+
+	draw = ImageDraw.Draw(file_name)
 
 	font = ImageFont.truetype("/home/muiruri_samuel/webapp/django-captcha/djangocaptcha/static/fonts/arial.ttf", 16)
-	image.text((5, 5), eval_string, (0,0,0), font=font)
-	file_name = random_filename()
+	draw.text((5, 5), eval_string, (0,0,0), font=font)
+	
 	image.save(file_name, "PNG")
 
 	return file_name, answer, eval_string
