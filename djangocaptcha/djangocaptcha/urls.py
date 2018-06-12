@@ -15,9 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from captcha.views import login_page
+from captcha.views import login_page, login_ajax
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', login_page),
+    path('login-ajax', login_ajax),
 ]

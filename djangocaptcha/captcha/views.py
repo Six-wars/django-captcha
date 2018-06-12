@@ -3,6 +3,8 @@ import random
 import string
 from PIL import Image, ImageFont, ImageDraw
 from captcha.models import Captcha
+import json
+from django.http import HttpResponse, HttpResponseRedirect
 
 def random_filename(path=None, length=None):
 	text = string.ascii_letters + string.digits
@@ -55,3 +57,22 @@ def login_page(request, template_name="login.html"):
     context['captcha_url'] = '/' + file_name
     context['ref_id'] = result_id
     return render_to_response(template_name, context)
+
+def login_ajax(request):
+	response = {'status': None}
+
+	if request.method == 'POST':
+		data = json.loads(request.body)
+		username, password, ans, ref_id = data['username'], data['password'], data['captcha-result'], data['captcha-ref-id']
+
+		
+		
+		response['status'] = 'ok'
+
+	else:
+		response['error'] = 'no post data found'
+
+	return HttpResponse(
+			json.dumps(response),
+			content_type="application/json"
+		)

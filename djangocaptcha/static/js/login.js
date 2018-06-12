@@ -32,6 +32,37 @@ $(function() {
             'captcha-ref-id': $('#ref-id').val()
         }
 
+        var csrftoken = $.cookie('csrftoken');
+
+        $.ajax({
+            url: "/login-ajax",
+            type: "POST",
+            dataType: 'json',
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
+                    // Send the token to same-origin, relative URLs only.
+                    // Send the token only if the method warrants CSRF protection
+                    // Using the CSRFToken value acquired earlier
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+
+            },
+            data: JSON.stringify(data),
+            success: function(response){
+                if (response['status'] == 'ok') {
+                    
+                }
+
+            },
+            error: function(xhr){
+                
+            },
+
+
+            });
+        
+/* End Ajax Call */
+
     });
 
 });
