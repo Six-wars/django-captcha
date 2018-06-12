@@ -4,7 +4,7 @@ import string
 from PIL import Image, ImageFont, ImageDraw
 
 def random_filename(path=None, length=None):
-	text = string.uppercase + string.lowercase + string.digits
+	text = string.ascii_letters + string.digits
 
 	if path == None:
 		path = 'djangocaptcha/media/images/'
