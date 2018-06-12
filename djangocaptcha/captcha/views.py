@@ -29,7 +29,7 @@ def generate_captcha():
 
 	if pre_check:
 		existing_version = pre_check[0]
-		return existing_version.img_path, existing_version.ans, existing_version.eval_string
+		return existing_version.img_path, existing_version.ans, existing_version.eval_string, existing_version.id
 
 	answer = eval(eval_string)
 
@@ -47,10 +47,11 @@ def generate_captcha():
 	new = Captcha(img_path=file_name, ans=answer, eval_string=eval_string)
 	new.save()
 
-	return file_name, answer, eval_string
+	return file_name, answer, eval_string, new.id
 
 def login_page(request, template_name="login.html"):
     context = {'title': 'Login Page'}
-    file_name, answer, _ = generate_captcha()
+    file_name, answer, _, result_id = generate_captcha()
     context['captcha_url'] = '/' + file_name
+    context['ref_id'] = result_id
     return render_to_response(template_name, context)
