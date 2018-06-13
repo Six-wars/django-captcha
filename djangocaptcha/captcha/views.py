@@ -47,7 +47,7 @@ def generate_captcha():
 	
 	image.save(file_name, "PNG")
 
-	new = Captcha(img_path=file_name, ans=answer, eval_string=eval_string)
+	new = Captcha(img_path=file_name, ans=answer, eval_string=eval_string, ans=answer)
 	new.save()
 
 	return file_name, answer, eval_string, new.id
