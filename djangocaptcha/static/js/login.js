@@ -53,6 +53,8 @@ $(function() {
                     $('#captcha-img').attr('src', response['captcha-url']);
                     $('#ref-id').attr('value', response['ref-id']);
                     $('.form-error').text(response['error-message']);
+                } else if (response['status'] == 'ok') {
+                    window.location.replace("/admin/");
                 }
 
             },
