@@ -6,6 +6,7 @@ from captcha.models import Captcha
 import json
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
+from django.contrib.auth import login as django_login
 
 def random_filename(path=None, length=None):
 	text = string.ascii_letters + string.digits
@@ -86,7 +87,7 @@ def login_ajax(request):
 				password_ok = user.check_password(password)
 
 				if password_ok: #ok move to logging in user
-					pass
+					django_login(request, user)
 
 					#just incase...
 					response['status'] = 'ok'
