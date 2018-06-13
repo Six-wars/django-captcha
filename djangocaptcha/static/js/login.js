@@ -29,7 +29,7 @@ $(function() {
             'username': $('#username').val(),
             'password': $('#password').val(),
             'captcha-result': $('#captcha').val(),
-            'captcha-ref-id': $('#ref-id').val()
+            'captcha-ref-id': $('#ref-id').attr('value')
         }
 
         var csrftoken = $.cookie('csrftoken');
