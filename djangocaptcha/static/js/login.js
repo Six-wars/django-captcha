@@ -51,7 +51,7 @@ $(function() {
             success: function(response){
                 if (response['status'] == 'failed') {
                     $('#captcha-img').attr('src', response['captcha-url']);
-                    $('#ref-id').val(response['ref-id']);
+                    $('#ref-id').attr('value', response['ref-id']);
                     $('.form-error').text(response['error-message']);
                 }
 
