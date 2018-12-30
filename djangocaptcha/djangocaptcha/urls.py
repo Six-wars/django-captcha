@@ -17,8 +17,14 @@ from django.contrib import admin
 from django.urls import path
 from captcha.views import login_page, login_ajax
 
+from django.conf.urls.static import static
+from django.conf import settings
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', login_page),
     path('login-ajax', login_ajax),
 ]
+
+if settings.DEBUG == True:
+	urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
